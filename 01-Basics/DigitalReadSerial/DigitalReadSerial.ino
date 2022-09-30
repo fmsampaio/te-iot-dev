@@ -1,8 +1,8 @@
 /* 
-  Exemplo: 01-Basics/Blink  
+  Exemplo: 01-Basics/DigitalReadSerial
 */
 
-// digital pin 2 has a pushbutton attached to it. Give it a name:
+// PushButton deve estar conectado ao pino 2
 int pushButton = 2;
 
 // A função setup é executada uma vez quando forem pressionados os botões de reset ou de power on na placa
