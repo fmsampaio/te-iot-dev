@@ -14,3 +14,4 @@ void loop() {
   delay(1000);                    // Espera por 1 segundo (1000 milissegundos)
   digitalWrite(13, LOW);          // Desliga o LED (LOW é o nível baixo de tensão)
   delay(1000);                    // Espera por 1 segundo (1000 milissegundos)
+}
