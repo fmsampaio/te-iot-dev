@@ -15,8 +15,7 @@
 RFID RC522(SDA_DIO, RESET_DIO); 
 
 // A função setup é executada uma vez quando forem pressionados os botões de reset ou de power on na placa
-void setup()
-{ 
+void setup() { 
   // Inicialização da comunicação serial (9600 bps)
   Serial.begin(9600);
 
@@ -28,8 +27,7 @@ void setup()
 }
 
 // A função loop é executada de forma repetida sem parada
-void loop()
-{
+void loop() {
   // Checa se um cartão/tag RFID foi detectado
   if (RC522.isCard())
   {
@@ -48,7 +46,7 @@ void loop()
       Serial.print(RC522.serNum[i],HEX);  
     }
     Serial.println();
-    
+
     Serial.println();
   }
   delay(1000);
