@@ -6,21 +6,16 @@
 #include <Ethernet.h>
 #include <PubSubClient.h>
 
-//TODO Atualizar valores do MAC e IP do servidor MQTT
+//TODO 
 byte mac[]    = {0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED}; //TODO modificar aqui!!
 
-/** Local server **/
-String server = "192.168.0.42";
-int port = 1883;
-
 /** MQTT TE Server **/
-/*String server = "m14.cloudmqtt.com";
+String server = "m14.cloudmqtt.com";
 int port = 12891;
 String username = "vqlvmcfj";
 String password = "Vzw6NIX4voxY";
-*/
 
-String clientName = "arduinoClientFelipe"; //TODO modificar aqui!!
+String clientName = "arduinoClientXXX"; //TODO modificar aqui! Cada cliente MQTT deve ter um nome único!
 
 // Aqui são tratadas as mensagens que são recebidas do servidor MQTT
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -50,14 +45,7 @@ void connectToMQTTBroker() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     
-    // TODO modificar aqui!!
-    
-    /*
     if (client.connect(clientName.c_str(), username.c_str(), password.c_str())) { 
-    */
-
-    if (client.connect(clientName.c_str())) {
-    
       Serial.println("connected");
     } 
     else {
@@ -73,13 +61,13 @@ void connectToMQTTBroker() {
 
 //Aqui acontecem as inscrições em tópicos
 void subscribeToTopics() {
-  client.subscribe("test"); //TODO modificar aqui!!
+  client.subscribe("te/arduinoXX"); //TODO: modificar sufixo do nome do tópico
 }
 
 void publishContagem() {
   String contStr(cont);
   Serial.println(contStr.c_str());
-  client.publish("contagem",contStr.c_str()); 
+  client.publish("te/contagemXX",contStr.c_str()); // TODO: modificar sufixo do nome do tópico
   cont += 1;
   delay(1000);
 }
