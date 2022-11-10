@@ -6,7 +6,7 @@
 #include <Ethernet.h>
 #include <PubSubClient.h>
 
-//TODO 
+// TODO: cada bancada deve ter um MAC address diferente
 byte mac[]    = {0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED}; //TODO modificar aqui!!
 
 /** MQTT TE Server **/
@@ -52,8 +52,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
 EthernetClient ethClient;
 PubSubClient client(ethClient);
 
-int cont = 0;
-
 // Função para criação da conexão com o MQTT Broker
 void connectToMQTTBroker() {
 
@@ -83,12 +81,14 @@ void subscribeToTopics() {
 void setup()
 {
   Serial.begin(9600);
+
+  // Inicializando o Ethernet Shield
   Ethernet.begin(mac);
   delay(1500);
 
   Serial.println("Interface ethernet iniciada...");
-  Serial.println(Ethernet.localIP());
 
+  // Setando informações do Broker MQTT e da função de callback
   client.setServer(server.c_str(), port);
   client.setCallback(callback);
 

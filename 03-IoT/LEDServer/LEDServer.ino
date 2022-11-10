@@ -2,7 +2,9 @@
 #include <Ethernet.h>
 
 // TODO: cada bancada deve ter um MAC address diferente
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };               
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }; 
+
+// Criando o objeto para a criação de um Servidor Web na porta 80
 EthernetServer server(80);                             
  
 int pinoLED = 13;
@@ -11,11 +13,13 @@ int estadoLED;
 void setup()
 {
   Serial.begin(9600);
-  Ethernet.begin(mac);
-                   
+
+  // Inicializando o Ethernet Shield
+  Ethernet.begin(mac);                   
   
   pinMode(pinoLED,OUTPUT);
 
+  // Inicializando o servidor Web e imprimindo o IP da interface de rede
   server.begin();
   Serial.print("Server is at IP address: ");
   Serial.println(Ethernet.localIP());
@@ -26,12 +30,15 @@ void setup()
 }
  
 void loop() {
+  
+  // Detectando a solicitação de conexão de um cliente
   EthernetClient client = server.available();
-  //Serial.println("Waiting...");
+
   if (client) { 
     boolean currentLineIsBlank = true;
     String requisicao;
 
+    // Leitura dos dados da requisição do cliente
     while (client.connected()) {
       
       if (client.available()) { 
@@ -40,7 +47,8 @@ void loop() {
         
         if (c == '\n' && currentLineIsBlank ) {     
           Serial.print(requisicao);
-
+          
+          // Detectando o path da requisição para controlar o LED
           if (requisicao.indexOf("GET /LED=ON") != -1)  {
             estadoLED = HIGH;
           }
@@ -57,6 +65,7 @@ void loop() {
             Serial.println("LED DESLIGADO!");
           }
 
+          // Envia HTML de resposta ao cliente
           enviaResposta(client);  
           break;
         }
@@ -70,6 +79,7 @@ void loop() {
       } 
     }
     
+    // Finalizando a conexão HTTP
     delay(1);
     client.stop();  
     Serial.println("Client disonnected");
@@ -78,6 +88,7 @@ void loop() {
   }
 }
 
+// Função para enviar o HTML com links para o controle do LED
 void enviaResposta(EthernetClient client) {
   client.println("HTTP/1.1 200 OK");
   client.println("Content-Type: text/html");

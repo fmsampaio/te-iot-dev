@@ -6,7 +6,7 @@
 #include <Ethernet.h>
 #include <PubSubClient.h>
 
-//TODO 
+// TODO: cada bancada deve ter um MAC address diferente
 byte mac[]    = {0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED}; //TODO modificar aqui!!
 
 /** MQTT TE Server **/
@@ -59,11 +59,12 @@ void connectToMQTTBroker() {
   
 }
 
-//Aqui acontecem as inscrições em tópicos
+// Função que realiza as inscrições em tópicos
 void subscribeToTopics() {
   client.subscribe("te/arduinoXX"); //TODO: modificar sufixo do nome do tópico
 }
 
+// Função que realiza a publicação de mensagens (contador)
 void publishContagem() {
   String contStr(cont);
   Serial.println(contStr.c_str());
@@ -75,12 +76,14 @@ void publishContagem() {
 void setup()
 {
   Serial.begin(9600);
+
+  // Inicializando o Ethernet Shield
   Ethernet.begin(mac);
   delay(1500);
 
   Serial.println("Interface ethernet iniciada...");
-  Serial.println(Ethernet.localIP());
 
+  // Setando informações do Broker MQTT e da função de callback
   client.setServer(server.c_str(), port);
   client.setCallback(callback);
 
@@ -91,11 +94,14 @@ void setup()
 
 void loop()
 {
+  // Busca conexão enquanto não houver uma estabelecida com o Broker MQTT
   if(!client.connected()) {
     connectToMQTTBroker();
     subscribeToTopics();
   }
+
   publishContagem();
 
+  // Chama repetidamente a função loop() para verificar mensagensa serem recebidas
   client.loop();
 }
