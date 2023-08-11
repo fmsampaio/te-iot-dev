@@ -1,1 +1,1 @@
-# te-2022-iot-dev
+# Arduino examples for IoT prototypes development
