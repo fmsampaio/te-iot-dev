@@ -9,11 +9,13 @@
 // TODO: cada bancada deve ter um MAC address diferente
 byte mac[]    = {0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED}; //TODO modificar aqui!!
 
-/** MQTT TE Server **/
-String server = "m14.cloudmqtt.com";
-int port = 12891;
-String username = "vqlvmcfj";
-String password = "Vzw6NIX4voxY";
+/** Plano A => Public MQTT HQ **/
+String server = "public.mqtthq.com";
+int port = 1883;
+
+/** Plano B => Mosquitto Test **/
+//String server = "test.mosquitto.org";
+//int port = 1883;
 
 String clientName = "arduinoClientXXX"; //TODO modificar aqui! Cada cliente MQTT deve ter um nome único!
 
@@ -45,7 +47,7 @@ void connectToMQTTBroker() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     
-    if (client.connect(clientName.c_str(), username.c_str(), password.c_str())) { 
+    if (client.connect(clientName.c_str()) { 
       Serial.println("connected");
     } 
     else {

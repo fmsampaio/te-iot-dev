@@ -2,13 +2,17 @@ from paho.mqtt import client as mqtt_client
 import random
 import time
 
-broker = 'm14.cloudmqtt.com'
-port = 12891
-topic = 'te/testepub'
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
-username = 'vqlvmcfj'
-password = 'Vzw6NIX4voxY'
 
+""" Plano A => Public MQTT HQ """
+broker = 'public.mqtthq.com'
+port = 1883
+
+""" Plano B => Mosquitto Test """
+#broker = 'test.mosquitto.org'
+#port = 1883
+
+topic = 'te/testepub'
+client_id = f'python-mqtt-{random.randint(0, 2000)}'
 
 def connect_mqtt() -> mqtt_client:
     def on_connect(client, userdata, flags, rc):
@@ -18,7 +22,7 @@ def connect_mqtt() -> mqtt_client:
             print("Failed to connect, return code %d\n", rc)
 
     client = mqtt_client.Client(client_id)
-    client.username_pw_set(username, password)
+    #client.username_pw_set(username, password)
     client.on_connect = on_connect
     client.connect(broker, port)
     return client
