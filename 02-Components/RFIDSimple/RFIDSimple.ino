@@ -35,19 +35,19 @@ void loop() {
     RC522.readCardSerial();
     Serial.println("Card detected:");
 
-    Serial.print("DEC: ");
-    for(int i=0;i<5;i++) { // Impressão do ID do cartão/tag em decimal
-      Serial.print(RC522.serNum[i],DEC);    
-    }
-    Serial.println();
-
-    Serial.print("HEX: ");
-    for(int i=0;i<5;i++) { // Impressão do ID do cartão/tag em hexadecimal      
-      Serial.print(RC522.serNum[i],HEX);  
-    }
-    Serial.println();
+    String idRFID = getID(RC522.serNum);
+    Serial.print("ID: ");
+    Serial.println(idRFID);
 
     Serial.println();
   }
   delay(1000);
+}
+
+String getID(unsigned char serNum[5]) {
+    String returnable = "";
+    for(int i = 0; i < 5; i++) { // Impressão do ID do cartão/tag em decimal
+      returnable += serNum[i];
+    }
+    return returnable;
 }
