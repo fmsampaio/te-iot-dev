@@ -36,7 +36,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   String topicStr(topic);
   Serial.println(message);
 
-  if(topicStr.equals("te/ledXX")) {
+  if(topicStr.equals("te/led")) {
     if(message.equals("1")) {
       digitalWrite(ledPin, HIGH);
     }
@@ -77,7 +77,7 @@ void connectToMQTTBroker() {
 
 //Aqui acontecem as inscrições em tópicos
 void subscribeToTopics() {
-  client.subscribe("te/ledXX"); //TODO: modificar sufixo do nome do tópico
+  client.subscribe("te/led"); //TODO: modificar sufixo do nome do tópico
 }
 
 void setup()
