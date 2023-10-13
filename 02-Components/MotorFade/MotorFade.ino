@@ -14,7 +14,6 @@ void setup(){
 }
 
 void loop(){
-  /*Exemplo de velocidades no motor A*/
   digitalWrite(IN1,HIGH);
   digitalWrite(IN2,LOW);
   Serial.println("Sentido anti-horário!");
@@ -27,7 +26,6 @@ void loop(){
     delay(500);
   }
 
-  /*Exemplo de velocidades no motor A*/
   digitalWrite(IN1,LOW);
   digitalWrite(IN2,HIGH);
   Serial.println("Sentido HORÁRIO!");
