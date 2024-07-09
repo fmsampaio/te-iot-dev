@@ -13,13 +13,13 @@ port = 1883
 topic = 'te/game'
 client_id = f'python-mqtt-{random.randint(0, 2000)}'
 
-targetNumber = random.randint(0, 500)
-print(targetNumber)
+targetNumber = random.randint(0, 1000)
 
 def connect_mqtt() -> mqtt_client:
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
-            print("Connected to MQTT Broker!")
+            #print("Connected to MQTT Broker!")
+            print("JOGO INICIADO!")
         else:
             print("Failed to connect, return code %d\n", rc)
 
@@ -33,13 +33,22 @@ def connect_mqtt() -> mqtt_client:
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
         #print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-        guess = int(msg.payload.decode())
-        if(guess < targetNumber):
-            print(f"O valor alvo é MAIOR que {guess}")
-        elif(guess > targetNumber):
-            print(f"O valor é alvo MENOR que {guess}")
-        else:
-            print(f"Valor CORRETO! --> {guess}!")
+        counter = 0
+        try:
+            guess = int(msg.payload.decode())
+            if(guess < targetNumber):
+                print(f"[DICA] O valor alvo é MAIOR que {guess}")
+            elif(guess > targetNumber):
+                print(f"[DICA] O valor alvo é MENOR que {guess}")
+            else:
+                print(f"Valor CORRETO! --> {guess}!")
+                print("JOGO TERMINADO!")
+                exit()
+        
+        except ValueError:
+            counter += 1
+
+            #print('[ERRO] Valor não é um número inteiro.')    
 
     client.subscribe(topic)
     client.on_message = on_message
@@ -51,4 +60,5 @@ def run():
 
 
 if __name__ == '__main__':
+    
     run()
