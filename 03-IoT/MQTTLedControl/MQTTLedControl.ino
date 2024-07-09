@@ -9,15 +9,16 @@
 // TODO: cada bancada deve ter um MAC address diferente
 byte mac[]    = {0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED}; //TODO modificar aqui!!
 
-/** Plano A => Public MQTT HQ **/
-String server = "public.mqtthq.com";
+/** Plano A => MQTT Eclipse Projects**/
+String server = "mqtt.eclipseprojects.io";
 int port = 1883;
 
-/** Plano B => Mosquitto Test **/
-//String server = "test.mosquitto.org";
+/** Plano B => Public MQTT HQ **/
+//String server = "public.mqtthq.com";
 //int port = 1883;
 
-String clientName = "arduinoClientXXX"; //TODO modificar aqui! Cada cliente MQTT deve ter um nome único!
+String ledTopic = "te/ledXX";
+String clientName = "arduinoClientXX"; //TODO modificar aqui! Cada cliente MQTT deve ter um nome único!
 
 int ledPin = 13;
 
@@ -36,7 +37,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   String topicStr(topic);
   Serial.println(message);
 
-  if(topicStr.equals("te/led")) {
+  if(topicStr.equals(ledTopic)) {
     if(message.equals("1")) {
       digitalWrite(ledPin, HIGH);
     }
@@ -77,7 +78,7 @@ void connectToMQTTBroker() {
 
 //Aqui acontecem as inscrições em tópicos
 void subscribeToTopics() {
-  client.subscribe("te/led"); //TODO: modificar sufixo do nome do tópico
+  client.subscribe(ledTopic.c_str()); //TODO: modificar sufixo do nome do tópico
 }
 
 void setup()
