@@ -17,39 +17,10 @@ int port = 1883;
 //String server = "public.mqtthq.com";
 //int port = 1883;
 
-String ledTopic = "te/ledXX";
+String ldrTopic = "te/ldrXX";
 String clientName = "arduinoClientXX"; //TODO modificar aqui! Cada cliente MQTT deve ter um nome único!
 
-int ledPin = 13;
-
-// Aqui são tratadas as mensagens que são recebidas do servidor MQTT
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-
-  String message = "";
-  
-  for (int i=0;i<length;i++) {
-    message += (char)payload[i];
-  }
-
-  String topicStr(topic);
-  Serial.println(message);
-
-  if(topicStr.equals(ledTopic)) {
-    if(message.equals("1")) {
-      digitalWrite(ledPin, HIGH);
-    }
-    else if(message.equals("0")) {
-      digitalWrite(ledPin, LOW);
-    }
-    else {
-      Serial.println("Command not recognized...");
-    }
-  }
-
-}
+int ldrPin = A0;
 
 // Criação e inicialização dos objetos para a criação de um cliente MQTT
 EthernetClient ethClient;
@@ -73,12 +44,6 @@ void connectToMQTTBroker() {
       delay(5000);
     }
   }
-  
-}
-
-//Aqui acontecem as inscrições em tópicos
-void subscribeToTopics() {
-  client.subscribe(ledTopic.c_str()); //TODO: modificar sufixo do nome do tópico
 }
 
 void setup()
@@ -93,21 +58,29 @@ void setup()
 
   // Setando informações do Broker MQTT e da função de callback
   client.setServer(server.c_str(), port);
-  client.setCallback(callback);
 
-  connectToMQTTBroker();
-  subscribeToTopics();
+  connectToMQTTBroker();  
+}
 
-  pinMode(ledPin, OUTPUT);
-  
+void publishLuminosity() {
+  int luminosity = analogRead(ldrPin);
+  String lumStr = String(luminosity);
+
+  client.publish(ldrTopic.c_str(), lumStr.c_str());
+  Serial.print("Message published [");
+  Serial.print(ldrTopic);
+  Serial.print("] --> ");
+  Serial.println(luminosity);
 }
 
 void loop()
 {
   if(!client.connected()) {
     connectToMQTTBroker();
-    subscribeToTopics();
+    
   }
+  publishLuminosity();
+  delay(1000);
 
   client.loop();
 }
