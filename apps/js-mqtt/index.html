@@ -14,14 +14,13 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
         <script>
-            // Plano A => MQTT Eclipse Projects
-            broker = 'mqtt.eclipseprojects.io/mqtt'
-            port = 80
-
+            // Plano A => Tyckr MQTT IO
+            broker = 'mqtt.tyckr.io'
+            port = 8080 
             
-            // Plano B => Public MQTT HQ
-            //broker = 'public.mqtthq.com'
-            //port = 8083
+            // // Plano B => Bevywise MQTT HQ
+            // broker = 'public-mqtt-broker.bevywise.com'
+            // port = 10443 
 
             randomClientName = `client-${Math.floor(Math.random()*1000000000)}`
             console.log(randomClientName)

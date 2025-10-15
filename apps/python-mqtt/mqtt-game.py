@@ -2,13 +2,13 @@ from paho.mqtt import client as mqtt_client
 import random
 import time
 
-""" Plano A => Public MQTT HQ """
-#broker = 'public.mqtthq.com'
-#port = 1883
-
-""" Plano B => MQTT Eclipse Projects """
-broker = 'mqtt.eclipseprojects.io'
+""" Plano A => Tyckr MQTT IO """
+broker = 'mqtt.tyckr.io'
 port = 1883
+
+""" Plano B => Bevywise MQTT HQ """
+# broker = 'public-mqtt-broker.bevywise.com'
+# port = 1883
 
 topic = 'te/game'
 client_id = f'python-mqtt-{random.randint(0, 2000)}'

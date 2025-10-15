@@ -9,12 +9,12 @@
 // TODO: cada bancada deve ter um MAC address diferente
 byte mac[]    = {0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED}; //TODO modificar aqui!!
 
-/** Plano A => MQTT Eclipse Projects**/
-String server = "mqtt.eclipseprojects.io";
+/** Plano A => Tyckr MQTT IO**/
+String server = "mqtt.tyckr.io";
 int port = 1883;
 
-/** Plano B => Public MQTT HQ **/
-//String server = "public.mqtthq.com";
+/** Plano B => Bevywise MQTT HQ **/
+//String server = "public-mqtt-broker.bevywise.com";
 //int port = 1883;
 
 String ledTopic = "te/ledXX";
