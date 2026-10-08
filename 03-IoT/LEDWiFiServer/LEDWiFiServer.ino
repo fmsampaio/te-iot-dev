@@ -1,8 +1,8 @@
 #include "WiFiEsp.h"
 
 // Dados da rede Wi-Fi
-char ssid[] = "TP-Link_72F8";
-char pass[] = "07898143";
+char ssid[] = "IFRS-ALUNOS";
+char pass[] = "ifrsfarroupilha";
 
 // Criando o objeto para a criação de um Servidor Web na porta 80
 WiFiEspServer server(80);
